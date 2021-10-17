@@ -27,7 +27,14 @@ async function login(req, res) {
     res.json({ token });
 }
 
+async function isAvailable(req, res) {
+    const { username } = req.body;
+    const doesExist = await User.findOne({ username });
+    res.send(!doesExist);
+}
+
 module.exports = {
     create,
-    login
+    login,
+    isAvailable
 };

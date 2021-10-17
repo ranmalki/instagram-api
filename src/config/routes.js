@@ -17,6 +17,7 @@ const auth = (req, res, next) => {
 }
 
 router.post('/user', usersController.create);
+router.post('/user/availability', usersController.isAvailable);
 router.post('/login', usersController.login); // req.body => username, password
 router.get('/health', auth, (req, res) => {
     res.sendStatus(200);
