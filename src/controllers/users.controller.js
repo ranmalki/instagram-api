@@ -33,8 +33,40 @@ async function isAvailable(req, res) {
     res.send(!doesExist);
 }
 
+async function me(req, res) {
+    try {
+        const user = await User.findById(req.userId);
+        if (!user) {
+            res.sendStatus(401);
+            return
+        }
+        res.send(user);
+    } catch(err) {
+        res.sendStatus(500);
+    }
+}
+
+async function getUser(req, res) {
+	try {
+		const {username} = req.params;
+		const user = await User.findOne({ username });
+        const posts = await Post.find({ author: user._id });
+	  
+	  if(!user) {
+		  res.sendStatus(404);
+	  }
+		else {
+			res.send(user);
+		}
+	} catch(err) {
+		res.sendStatus(500);
+	}
+}
+
 module.exports = {
     create,
     login,
-    isAvailable
+    isAvailable,
+    me,
+    getUser
 };
