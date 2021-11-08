@@ -39,6 +39,7 @@ router.get('/user/:username', auth, usersController.getUser);
 router.post('/user', usersController.create);
 router.post('/user/availability', usersController.isAvailable);
 router.post('/login', usersController.login);
+router.get('/search/user/:username', auth, usersController.search);
 router.get('/health', (req, res) => {
     res.sendStatus(200);
 });
