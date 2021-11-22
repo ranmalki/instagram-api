@@ -31,15 +31,24 @@ const auth = (req, res, next) => {
     }
 };
 
-router.get('/user/me', auth, usersController.me);
+
+router.post('/post/:id/like', auth, postsController.like);
+router.post('/post/:id/unlike', auth, postsController.unlike);
+router.post('/post/:id/comment', auth, postsController.createComment);
+router.post('/post/:id', auth, postsController.getOne);
 router.post('/post', auth, upload.single('image'), postsController.create);
 router.get('/post', postsController.getAll);
 router.get('/post/:username', auth, postsController.getPosts);
+
+router.get('/user/me', auth, usersController.me);
 router.get('/user/:username', auth, usersController.getUser);
 router.post('/user', usersController.create);
 router.post('/user/availability', usersController.isAvailable);
-router.post('/login', usersController.login);
+router.post('/user/:username/follow', auth, usersController.follow);
+router.post('/user/:username/unfollow', auth, usersController.unfollow);
 router.get('/search/user/:username', auth, usersController.search);
+
+router.post('/login', usersController.login);
 router.get('/health', (req, res) => {
     res.sendStatus(200);
 });
